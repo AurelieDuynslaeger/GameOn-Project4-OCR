@@ -28,6 +28,12 @@ modalClose.addEventListener("click", () => {
   modalbg.style.display = "none";
 })
 
+//on submit sur le form
+// function validate(name){
+//   //message de validation de la réservation 
+//   alert(`Merci ${name} ! Votre réservation a été reçue.`)
+// }
+
 //Création de la class réservation
 class Booking {
   constructor(firstname, lastname, email, birthdate, quantity, location, checkbox) {
@@ -130,3 +136,4 @@ form.addEventListener("submit", (event) => {
   //méthode reset permet de vider les champs du formulaire
   form.reset();
 });
+
