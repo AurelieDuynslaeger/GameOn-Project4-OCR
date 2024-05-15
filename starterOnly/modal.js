@@ -42,13 +42,15 @@ class Booking {
 }
 
 //initialisation du tableau des réservations de GameOn
-const bookings = JSON.parse(localStorage.getItem('bookings')) || [];
-console.log(`Tableaux des réservations :${bookings}`);
 // persistance des données
+const bookings = JSON.parse(localStorage.getItem('bookings')) || [];
+//tableau des reservations dans la console 
+console.table(bookings);
+//JSON des réservations dans la console
+console.log(JSON.stringify(bookings, null, 2));
+
 
 //on cible le form pour le submit ensuite
-
-// let bookingRegister = document.getElementsByClassName("btn-submit");
 const form = document.querySelector("form");
 
 form.addEventListener("submit", (event) => {
@@ -65,19 +67,19 @@ form.addEventListener("submit", (event) => {
   console.log(`Date de naissance :${birthdate}`);
   const quantity = document.getElementById("quantity").value;
   console.log(`Nb de tournois :${quantity}`);
-  const location = document.querySelector('input[name="location"]:checked').value;
-  console.log(`Ville choisie :${location}`);
+  const radioLocation = document.querySelector('input[name="location"]:checked');
+  console.log(`Ville choisie :${radioLocation}`);
   const checkbox1 = document.getElementById("checkbox1").checked;
   console.log(`CGV :${checkbox1}`);
 
-  //verif à mettre ici 
+  //verifications
   try {
     if (firstName.length < 2) {
       alert("Le prénom doit contenir au moins 2 caractères.");
       return false;
     }
 
-    if (lastName.lenght < 2) {
+    if (lastName.length < 2) {
       alert("Le nom doit contenir au moins 2 caractères.");
       return false;
     }
@@ -88,37 +90,43 @@ form.addEventListener("submit", (event) => {
     //vérifier le point [a-z0-9._-]+@[a-z0-9._-]+\.
     //vérifier l'extension [a-z0-9._-]+@[a-z0-9._-]+\.[a-z0-9._-]+
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    //utilisation de la méthode test ppur valider la chaine de caractères
+    //utilisation de la méthode test pour valider la chaine de caractères
     if (!emailPattern.test(email)) {
       alert("Veuillez saisir une adresse e-mail valide.");
       return false;
     }
-    if (isNaN(quantity) || quantity < 0 || quantity > 99) {
+    //isNan = verif si ce qui a été saisie dans quantité est bien un nombre
+    if (isNaN(quantity) & quantity < 0 || quantity > 99) {
       alert("Veuillez saisir un nombre valide pour le nombre de concours.");
       return false;
     }
-    if (!location) {
+    //verif si l'un des radio a été choisi
+    if (!radioLocation) {
       alert("Veuillez sélectionner un lieu de tournoi.");
       return false;
     }
 
+    //verif si la checkbox des CGV a bien été cochée
     if (!checkbox1) {
       alert("Veuillez accepter les conditions générales.");
       return false;
     }
   } catch (error) {
+    //display des erreurs en alert
     console.log("Une erreur est survenue : " + error.message);
   }
 
-
+  const location = radioLocation.value;
   //avec ses infos on crée une instance de Booking qui sera pushé dans le tableau bookings
   let booking = new Booking(firstName, lastName, email, birthdate, quantity, location, checkbox1);
 
 
   bookings.push(booking);
   localStorage.setItem('bookings', JSON.stringify(bookings));
-  console.table(bookings);
+
 
   alert(`Merci ${booking.firstName} ! Votre réservation a été reçue.`)
   console.log(booking);
+  //méthode reset permet de vider les champs du formulaire
+  form.reset();
 });
