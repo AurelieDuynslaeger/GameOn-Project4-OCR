@@ -162,14 +162,28 @@ form.addEventListener("submit", (event) => {
     //méthode reset permet de vider les champs du formulaire
     form.reset();
   } else {
-    //affichage des erreurs
+    // Affichage des erreurs
     errors.forEach(error => {
-      //ici ca dit que pour chaque erreur récupéré, on vient cibler le champ id de l'input où il y a l'erreur
-      const fieldElement = document.getElementById(error.fieldName);
-      if (fieldElement) {
-        //on remonte à son parent (formData) et on vient remplir le champ data-error avec le message d'erreur spécifié et on passe le data-error-visible en true pour que l'erreur prenne le style qui lui est attribué dans le css
-        fieldElement.parentNode.setAttribute("data-error", error.message);
-        fieldElement.parentNode.setAttribute("data-error-visible", "true");
+      if (error.fieldName === "location") {
+        //si le fieldName est strictement égale à "location", on vient attribuer le message d'erreur au conteneur des radios
+        //on cible les inputs radio dont le name est location  
+        const radioInputs = document.querySelectorAll('input[name="location"]');
+        if (radioInputs) {
+          radioInputs.forEach(radio => {
+            const radioContainer = radio.parentElement;
+            if (radioContainer) {
+              radioContainer.setAttribute("data-error", error.message);
+              radioContainer.setAttribute("data-error-visible", "true");
+            }
+          });
+        }
+      } else {
+        // sinon pour les autres champs (inputs text, number etc...), on vient remplir le champ data-error avec le message d'erreur spécifié et on passe le data-error-visible en true pour que l'erreur prenne le style qui lui est attribué dans le css
+        const fieldElement = document.getElementById(error.fieldName);
+        if (fieldElement) {
+          fieldElement.parentNode.setAttribute("data-error", error.message);
+          fieldElement.parentNode.setAttribute("data-error-visible", "true");
+        }
       }
     });
   }
