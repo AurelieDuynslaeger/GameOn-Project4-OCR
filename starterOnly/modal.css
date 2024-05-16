@@ -111,8 +111,6 @@ main {
   margin: 1px 20px 15px;
   border-radius: 2rem;
   text-align: justify;
-
-
 }
 
 .modal-btn {
@@ -439,6 +437,7 @@ input[data-error]::after {
   font-size: 6rem;
   font-weight: normal;
   white-space: nowrap;
+
 }
 .hero-text {
   width: 146%;
@@ -495,12 +494,12 @@ footer {
     display: none;
   }
   .hero-headline {
-    font-size: 4.5rem;
+    font-size: 3rem;
     white-space: normal;
   }
   .hero-text {
     width: unset;
-    font-size: 1.5rem;
+    font-size: 1.1rem;
   }
   .hero-img img {
     border-radius: 10px;
