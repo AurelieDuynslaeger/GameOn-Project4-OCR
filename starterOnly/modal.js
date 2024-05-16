@@ -99,8 +99,7 @@ form.addEventListener("submit", (event) => {
   //return false arrête l'éxécution du formulaire != submit
 
   if (lastName.length < 2) {
-    alert("Le nom doit contenir au moins 2 caractères.");
-    return false;
+    errors.push({ fieldName: "last", message: "Veuillez entrer 2 caractères ou plus pour le nom." })
   }
   //regex 
   // [a-z0-9._-] (peut contenir lettres a à z, chiffre 0 à 9, un tiret ou point ou underscore)
@@ -111,31 +110,26 @@ form.addEventListener("submit", (event) => {
   const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   //utilisation de la méthode test pour valider la chaine de caractères
   if (!emailPattern.test(email)) {
-    alert("Veuillez saisir une adresse e-mail valide.");
-    return false;
+    errors.push({ fieldName: "email", message: "Veuillez saisir une adresse e-mail valide." })
   }
 
   // Vérification si la date de naissance est vide
   if (birthdate === "") {
-    alert("Veuillez saisir votre date de naissance.");
-    return false;
+    errors.push({ fieldName: "birthdate", message: "Veuillez saisir votre date de naissance." })
   }
 
   //isNan = verif si ce qui a été saisie dans quantité est bien un nombre
   if (isNaN(quantity) || quantity < 0 || quantity > 99) {
-    alert("Veuillez saisir un nombre valide pour le nombre de concours.");
-    return false;
+    errors.push({ fieldName: "quantity", message: "Veuillez saisir un nombre valide pour le nombre de concours." })
   }
   //verif si l'un des radio a été choisi
   if (!radioLocation) {
-    alert("Veuillez sélectionner un lieu de tournoi.");
-    return false;
+    errors.push({ fieldName: "location", message: "Veuillez sélectionner un lieu de tournoi." })
   }
 
   //verif si la checkbox des CGV a bien été cochée
   if (!checkbox1) {
-    alert("Veuillez accepter les conditions générales.");
-    return false;
+    errors.push({ fieldName: "checkbox1", message: "Veuillez accepter les conditions générales." })
   }
 
   if (errors.length === 0) {
