@@ -49,7 +49,7 @@ function validate() {
   //on lui donne ce qu'on souhaite afficher dedans à la reservation
   //message + bouton fermer
   modalBody.innerHTML = `
-    <div class="">
+    <div class="valid-register">
     <h2>Merci ! Votre inscription a bien été reçue.</h2>
     <button class="btn-close">Fermer</button>
     </div>

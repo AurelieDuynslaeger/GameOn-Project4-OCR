@@ -205,6 +205,23 @@ main {
   }
 }
 
+/*conteneur message validation*/
+.valid-register{
+  height: 100%;
+  padding-top: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+.valid-register h2{ 
+  font-size: 40px;
+  margin-bottom: 20px;
+}
+
+.valid-register .btn-close{ 
+  align-self: flex-end;
+}
 
 
 label {
