@@ -22,11 +22,14 @@ function launchModal() {
   modalbg.style.display = "block";
 }
 
-// écouteur d'evènement sur le bouton X de la modal
-modalClose.addEventListener("click", () => {
-  //si le click est détecté alors la modal passe en display none
-  modalbg.style.display = "none";
-})
+function closeModal() {
+  // écouteur d'evènement sur le bouton X de la modal
+  modalClose.addEventListener("click", () => {
+    //si le click est détecté alors la modal passe en display none
+    modalbg.style.display = "none";
+  })
+};
+
 
 //on submit sur le form = quand le formulaire est soumis et que les vérifs passées sont bonnes, la pop up de validation apparaît.
 function validate() {
