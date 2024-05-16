@@ -29,10 +29,12 @@ modalClose.addEventListener("click", () => {
 })
 
 //on submit sur le form
-// function validate(name){
-//   //message de validation de la réservation 
-//   alert(`Merci ${name} ! Votre réservation a été reçue.`)
-// }
+function validate() {
+  //message de validation de la réservation 
+  const firstname = document.getElementById("first").value.trim();
+  alert(`Merci ${firstname} ! Votre réservation a été reçue.`);
+  return true;
+}
 
 //Création de la class réservation
 class Booking {
@@ -63,12 +65,13 @@ form.addEventListener("submit", (event) => {
   event.preventDefault();
 
   //enregristrer la résa au click avec toutes les valeurs saisies ou choisies
-  const firstName = document.getElementById("first").value;
+  const firstName = document.getElementById("first").value.trim();
   console.log(`Prénom :${firstName}`);
-  const lastName = document.getElementById("last").value;
+  const lastName = document.getElementById("last").value.trim();
   console.log(`Nom :${lastName}`);
-  const email = document.getElementById("email").value;
+  const email = document.getElementById("email").value.trim();
   console.log(`Email :${email}`);
+  //trim() : supprime les espaces aux deux extrémités de cette chaîne et renvoie une nouvelle chaîne, sans modifier la chaîne d'origine.
   const birthdate = document.getElementById("birthdate").value;
   console.log(`Date de naissance :${birthdate}`);
   const quantity = document.getElementById("quantity").value;
@@ -123,15 +126,14 @@ form.addEventListener("submit", (event) => {
   }
 
   const location = radioLocation.value;
+
+  // validate() déclenché au submit du form (alert);
   //avec ses infos on crée une instance de Booking qui sera pushé dans le tableau bookings
   let booking = new Booking(firstName, lastName, email, birthdate, quantity, location, checkbox1);
-
 
   bookings.push(booking);
   localStorage.setItem('bookings', JSON.stringify(bookings));
 
-
-  alert(`Merci ${booking.firstName} ! Votre réservation a été reçue.`)
   console.log(booking);
   //méthode reset permet de vider les champs du formulaire
   form.reset();
