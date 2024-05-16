@@ -31,8 +31,11 @@ img {
 }
 
 .topnav {
-  overflow: hidden;
-  margin: 3.5%;
+  /* overflow: hidden; */
+  padding: 3.5%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 .header-logo {
     float: left;
