@@ -22,13 +22,13 @@ function launchModal() {
   modalbg.style.display = "block";
 }
 
-// event listener on span modalClose
+// écouteur d'evènement sur le bouton X de la modal
 modalClose.addEventListener("click", () => {
-  //if click is detected : function = modalbg {display : none;}
+  //si le click est détecté alors la modal passe en display none
   modalbg.style.display = "none";
 })
 
-//on submit sur le form
+//on submit sur le form = quand le formulaire est soumis et que les vérifs passées sont bonnes, la pop up de validation apparaît.
 function validate() {
   //message de validation de la réservation 
   const firstname = document.getElementById("first").value.trim();
@@ -37,6 +37,8 @@ function validate() {
 }
 
 //Création de la class réservation
+// chaque réservation sera une instance de cette classe (objet)
+//que l'on retrouvera dans le local storage dans le tableau bookings
 class Booking {
   constructor(firstname, lastname, email, birthdate, quantity, location, checkbox) {
     this.firstName = firstname;
@@ -50,7 +52,7 @@ class Booking {
 }
 
 //initialisation du tableau des réservations de GameOn
-// persistance des données
+//persistance des données
 const bookings = JSON.parse(localStorage.getItem('bookings')) || [];
 //tableau des reservations dans la console 
 console.table(bookings);
@@ -58,10 +60,11 @@ console.table(bookings);
 console.log(JSON.stringify(bookings, null, 2));
 
 
-//on cible le form pour le submit ensuite
+//on cible le form pour le submit
 const form = document.querySelector("form");
 
 form.addEventListener("submit", (event) => {
+  //on annule le comportement par défaut du navigateur qui est de rechargé la page
   event.preventDefault();
 
   //enregristrer la résa au click avec toutes les valeurs saisies ou choisies
@@ -82,23 +85,26 @@ form.addEventListener("submit", (event) => {
   console.log(`CGV :${checkbox1}`);
 
   //Réinitialisation des attributs data-error et data-error-visible pour tous les champs
+  //dans le css, le style pour les errreurs était présent
+  //j'ai repris les attributs et à chaque déclenchement du formulaire, le data-error de chaque input est mis à vide, et le data-error-visible est mis à faux
   formData.forEach(data => {
     data.setAttribute("data-error", "");
     data.setAttribute("data-error-visible", "false");
   });
 
   //initialisation du tableau d'erreurs
+  //stockage des erreurs pour les afficher sous les inputs concernés s'il y en a
   const errors = [];
 
-  //verifications
-
+  //verifications des saisies utilisateur
   if (firstName.length < 2) {
+    //on vérifie si le prénom est au moins long de 2 caractères
+    //si non, on pousse dans le tableau d'erreurs pour pouvoir l'afficher ensuite
     errors.push({ fieldName: "first", message: "Veuillez entrer 2 caractères ou plus pour le prénom." })
   }
 
-  //return false arrête l'éxécution du formulaire != submit
-
   if (lastName.length < 2) {
+    //on vérifie si le nom est au moins long de 2 caractères
     errors.push({ fieldName: "last", message: "Veuillez entrer 2 caractères ou plus pour le nom." })
   }
   //regex 
@@ -110,47 +116,58 @@ form.addEventListener("submit", (event) => {
   const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   //utilisation de la méthode test pour valider la chaine de caractères
   if (!emailPattern.test(email)) {
+    //on vérifie si le mail est conforme à l'expression régulière que l'on a défini au desssus
     errors.push({ fieldName: "email", message: "Veuillez saisir une adresse e-mail valide." })
   }
 
   // Vérification si la date de naissance est vide
   if (birthdate === "") {
+    //on vérifie si le champ date n'est pas vide
     errors.push({ fieldName: "birthdate", message: "Veuillez saisir votre date de naissance." })
   }
 
   //isNan = verif si ce qui a été saisie dans quantité est bien un nombre
   if (isNaN(quantity) || quantity < 0 || quantity > 99) {
+    //on vérifie si la saisie est un nombre, et qu'il est supérieur à 0 et inférieur à 99
     errors.push({ fieldName: "quantity", message: "Veuillez saisir un nombre valide pour le nombre de concours." })
   }
   //verif si l'un des radio a été choisi
   if (!radioLocation) {
+    //on vérifie si un des radio pour la ville a été coché
     errors.push({ fieldName: "location", message: "Veuillez sélectionner un lieu de tournoi." })
   }
 
   //verif si la checkbox des CGV a bien été cochée
   if (!checkbox1) {
+    //on vérifie si la checkbox des conditions générales a été cochée
     errors.push({ fieldName: "checkbox1", message: "Veuillez accepter les conditions générales." })
   }
 
   if (errors.length === 0) {
+    //on vérifie ici si le nombre d'erreurs est strictement égale à 0 alors on fait le traitement
+
+    //on attribue la valeur du radio à location
     const location = radioLocation.value;
 
-    // validate() déclenché au submit du form (alert);
     //avec ses infos on crée une instance de Booking qui sera pushé dans le tableau bookings
     let booking = new Booking(firstName, lastName, email, birthdate, quantity, location, checkbox1);
 
+    //on pousse la résa dans le tableau bookings du local storage initialisé plus haut
     bookings.push(booking);
     localStorage.setItem('bookings', JSON.stringify(bookings));
 
     console.log(booking);
+    //on déclenche la fonction validate() pour le pop up de confirmation
     validate();
     //méthode reset permet de vider les champs du formulaire
     form.reset();
   } else {
     //affichage des erreurs
     errors.forEach(error => {
+      //ici ca dit que pour chaque erreur récupéré, on vient cibler le champ id de l'input où il y a l'erreur
       const fieldElement = document.getElementById(error.fieldName);
       if (fieldElement) {
+        //on remonte à son parent (formData) et on vient remplir le champ data-error avec le message d'erreur spécifié et on passe le data-error-visible en true pour que l'erreur prenne le style qui lui est attribué dans le css
         fieldElement.parentNode.setAttribute("data-error", error.message);
         fieldElement.parentNode.setAttribute("data-error-visible", "true");
       }
