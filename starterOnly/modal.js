@@ -1,3 +1,13 @@
+// DOM Elements
+const modalbg = document.querySelector(".bground");
+const modalBtn = document.querySelectorAll(".modal-btn");
+const formData = document.querySelectorAll(".formData");
+//span X to close modal
+const modalClose = document.querySelector(".close");
+//on cible le form pour le submit
+const form = document.querySelector("form");
+
+
 function editNav() {
   var x = document.getElementById("myTopnav");
   if (x.className === "topnav") {
@@ -7,13 +17,6 @@ function editNav() {
   }
 }
 
-// DOM Elements
-const modalbg = document.querySelector(".bground");
-const modalBtn = document.querySelectorAll(".modal-btn");
-const formData = document.querySelectorAll(".formData");
-//span X to close modal
-const modalClose = document.querySelector(".close");
-
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 
@@ -22,6 +25,7 @@ function launchModal() {
   modalbg.style.display = "block";
 }
 
+//close modal
 function closeModal() {
   // écouteur d'evènement sur le bouton X de la modal
   modalClose.addEventListener("click", () => {
@@ -30,13 +34,32 @@ function closeModal() {
   })
 };
 
-
 //on submit sur le form = quand le formulaire est soumis et que les vérifs passées sont bonnes, la pop up de validation apparaît.
 function validate() {
   //message de validation de la réservation 
   const firstname = document.getElementById("first").value.trim();
   alert(`Merci ${firstname} ! Votre réservation a été reçue.`);
   return true;
+}
+
+// fonction pour changer le contenu de la modal par le message de validation
+function validate() {
+  //on cible le body de la modale
+  const modalBody = document.querySelector(".modal-body");
+  //on lui donne ce qu'on souhaite afficher dedans à la reservation
+  //message + bouton fermer
+  modalBody.innerHTML = `
+    <div class="">
+    <h2>Merci ! Votre inscription a bien été reçue.</h2>
+    <button class="btn-close">Fermer</button>
+    </div>
+  `;
+
+  //on écoute le click sur le bouton 'fermer', au click on met la modale en display none
+  const btnClose = document.querySelector(".btn-close");
+  btnClose.addEventListener("click", () => {
+    modalbg.style.display = "none";
+  });
 }
 
 //Création de la class réservation
@@ -62,10 +85,7 @@ console.table(bookings);
 //JSON des réservations dans la console
 console.log(JSON.stringify(bookings, null, 2));
 
-
-//on cible le form pour le submit
-const form = document.querySelector("form");
-
+//on écoute l'event submit sur le formulaire et on fait les vérifs
 form.addEventListener("submit", (event) => {
   //on annule le comportement par défaut du navigateur qui est de rechargé la page
   event.preventDefault();

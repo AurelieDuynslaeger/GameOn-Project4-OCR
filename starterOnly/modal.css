@@ -164,7 +164,14 @@ main {
   height: 100%;
   width: 100%;
   overflow: auto;
-  background-color: rgba(26, 39, 156, 0.4);
+  /* background-color: rgba(26, 39, 156, 0.4); */
+}
+
+@media screen and (max-width: 540px){
+  .bground{
+    top:90px;
+    height: 100vh;
+  }
 }
 
 .content {
@@ -180,11 +187,25 @@ main {
   color: #fff;
   padding-top: 10px;
 }
+@media screen and (max-width: 540px){
+  .content{
+    margin:0;
+    max-width: 100%;
+    height: 100%;
+  }
+}
 
 .modal-body {
   padding: 15px 8%;
   margin: 15px auto;
 }
+@media screen and (max-width: 540px){
+  .modal-body{
+    height: 80vh;
+  }
+}
+
+
 
 label {
   font-family: var(--font-default);
@@ -320,7 +341,8 @@ input[data-error]::after {
   transform: rotate(-45deg);
 }
 .btn-submit,
-.btn-signup {
+.btn-signup,
+.btn-close {
   background: #fe142f;
   display: block;
   margin: 0 auto;
