@@ -72,7 +72,7 @@ form.addEventListener("submit", (event) => {
   const email = document.getElementById("email").value.trim();
   console.log(`Email :${email}`);
   //trim() : supprime les espaces aux deux extrémités de cette chaîne et renvoie une nouvelle chaîne, sans modifier la chaîne d'origine.
-  const birthdate = document.getElementById("birthdate").value;
+  const birthdate = document.getElementById("birthdate").value.trim();
   console.log(`Date de naissance :${birthdate}`);
   const quantity = document.getElementById("quantity").value;
   console.log(`Nb de tournois :${quantity}`);
@@ -81,61 +81,86 @@ form.addEventListener("submit", (event) => {
   const checkbox1 = document.getElementById("checkbox1").checked;
   console.log(`CGV :${checkbox1}`);
 
+  //Réinitialisation des attributs data-error et data-error-visible pour tous les champs
+  formData.forEach(data => {
+    data.setAttribute("data-error", "");
+    data.setAttribute("data-error-visible", "false");
+  });
+
+  //initialisation du tableau d'erreurs
+  const errors = [];
+
   //verifications
-  try {
-    if (firstName.length < 2) {
-      alert("Le prénom doit contenir au moins 2 caractères.");
-      return false;
-    }
 
-    if (lastName.length < 2) {
-      alert("Le nom doit contenir au moins 2 caractères.");
-      return false;
-    }
-    //regex 
-    // [a-z0-9._-] (peut contenir lettres a à z, chiffre 0 à 9, un tiret ou point ou underscore)
-    // [a-z0-9._-]+@ (verifier l'arobase)
-    //vérifier ce qui suit l'arobase (fournisseur) [a-z0-9._-]+@[a-z0-9._-]+
-    //vérifier le point [a-z0-9._-]+@[a-z0-9._-]+\.
-    //vérifier l'extension [a-z0-9._-]+@[a-z0-9._-]+\.[a-z0-9._-]+
-    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    //utilisation de la méthode test pour valider la chaine de caractères
-    if (!emailPattern.test(email)) {
-      alert("Veuillez saisir une adresse e-mail valide.");
-      return false;
-    }
-    //isNan = verif si ce qui a été saisie dans quantité est bien un nombre
-    if (isNaN(quantity) & quantity < 0 || quantity > 99) {
-      alert("Veuillez saisir un nombre valide pour le nombre de concours.");
-      return false;
-    }
-    //verif si l'un des radio a été choisi
-    if (!radioLocation) {
-      alert("Veuillez sélectionner un lieu de tournoi.");
-      return false;
-    }
-
-    //verif si la checkbox des CGV a bien été cochée
-    if (!checkbox1) {
-      alert("Veuillez accepter les conditions générales.");
-      return false;
-    }
-  } catch (error) {
-    //display des erreurs en alert
-    console.log("Une erreur est survenue : " + error.message);
+  if (firstName.length < 2) {
+    errors.push({ fieldName: "first", message: "Veuillez entrer 2 caractères ou plus pour le prénom." })
   }
 
-  const location = radioLocation.value;
+  //return false arrête l'éxécution du formulaire != submit
 
-  // validate() déclenché au submit du form (alert);
-  //avec ses infos on crée une instance de Booking qui sera pushé dans le tableau bookings
-  let booking = new Booking(firstName, lastName, email, birthdate, quantity, location, checkbox1);
+  if (lastName.length < 2) {
+    alert("Le nom doit contenir au moins 2 caractères.");
+    return false;
+  }
+  //regex 
+  // [a-z0-9._-] (peut contenir lettres a à z, chiffre 0 à 9, un tiret ou point ou underscore)
+  // [a-z0-9._-]+@ (verifier l'arobase)
+  //vérifier ce qui suit l'arobase (fournisseur) [a-z0-9._-]+@[a-z0-9._-]+
+  //vérifier le point [a-z0-9._-]+@[a-z0-9._-]+\.
+  //vérifier l'extension [a-z0-9._-]+@[a-z0-9._-]+\.[a-z0-9._-]+
+  const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  //utilisation de la méthode test pour valider la chaine de caractères
+  if (!emailPattern.test(email)) {
+    alert("Veuillez saisir une adresse e-mail valide.");
+    return false;
+  }
 
-  bookings.push(booking);
-  localStorage.setItem('bookings', JSON.stringify(bookings));
+  // Vérification si la date de naissance est vide
+  if (birthdate === "") {
+    alert("Veuillez saisir votre date de naissance.");
+    return false;
+  }
 
-  console.log(booking);
-  //méthode reset permet de vider les champs du formulaire
-  form.reset();
+  //isNan = verif si ce qui a été saisie dans quantité est bien un nombre
+  if (isNaN(quantity) || quantity < 0 || quantity > 99) {
+    alert("Veuillez saisir un nombre valide pour le nombre de concours.");
+    return false;
+  }
+  //verif si l'un des radio a été choisi
+  if (!radioLocation) {
+    alert("Veuillez sélectionner un lieu de tournoi.");
+    return false;
+  }
+
+  //verif si la checkbox des CGV a bien été cochée
+  if (!checkbox1) {
+    alert("Veuillez accepter les conditions générales.");
+    return false;
+  }
+
+  if (errors.length === 0) {
+    const location = radioLocation.value;
+
+    // validate() déclenché au submit du form (alert);
+    //avec ses infos on crée une instance de Booking qui sera pushé dans le tableau bookings
+    let booking = new Booking(firstName, lastName, email, birthdate, quantity, location, checkbox1);
+
+    bookings.push(booking);
+    localStorage.setItem('bookings', JSON.stringify(bookings));
+
+    console.log(booking);
+    validate();
+    //méthode reset permet de vider les champs du formulaire
+    form.reset();
+  } else {
+    //affichage des erreurs
+    errors.forEach(error => {
+      const fieldElement = document.getElementById(error.fieldName);
+      if (fieldElement) {
+        fieldElement.parentNode.setAttribute("data-error", error.message);
+        fieldElement.parentNode.setAttribute("data-error-visible", "true");
+      }
+    });
+  }
 });
 
