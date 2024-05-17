@@ -168,12 +168,16 @@ main {
 
 /*ajustements pour la modal sur les mobiles*/
 @media screen and (max-width: 540px){
+  body {
+    height: 100vh;
+  }
   .bground{
     top:90px;
-    height: 100vh;
+    height: 90vh;
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow-y: auto;
   }
   .content{
     margin:0;
@@ -193,8 +197,14 @@ main {
     flex-direction: column;
     justify-content: center;
   }
+  form {
+    height:100%;
+  }
+  label{
+    font-size: 15px;
+  }
   .formData{
-    margin-bottom: 25px;
+    margin-bottom: 5px;
   }
 }
 
