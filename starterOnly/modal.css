@@ -72,16 +72,6 @@ img {
   display: none;
 }
 
-
- @media screen and (max-width: 540px) {
-  .topnav a {display: none;}
-  .topnav a.icon {
-    float: right;
-    display: block;
-    margin-top: -15px;
-  }
-} 
-
 main {
   font-size: 130%;
   font-weight: bolder;
@@ -189,9 +179,7 @@ main {
     flex-direction: column;
   }
   .modal-body{
-    /*assure de le corps de la modale prenne tout l'espace*/
     flex:1;
-    /*soustraction du padding de la hauteur totale*/
     padding: 15px 8%;
     overflow-y: auto;
     display: flex;
@@ -524,6 +512,9 @@ footer {
 }
 
 @media screen and (max-width: 800px) {
+
+
+
   .topnav a {
     display: none;
   }
@@ -646,4 +637,3 @@ footer {
     opacity: 1;
   }
 }
-
