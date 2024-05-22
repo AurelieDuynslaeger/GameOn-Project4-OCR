@@ -470,7 +470,6 @@ input[data-error]::after {
   font-size: 6rem;
   font-weight: normal;
   white-space: nowrap;
-
 }
 .hero-text {
   width: 130%;
@@ -512,9 +511,6 @@ footer {
 }
 
 @media screen and (max-width: 800px) {
-
-
-
   .topnav a {
     display: none;
   }
@@ -523,21 +519,23 @@ footer {
     display: block;
   }
   .topnav.responsive {
-    position: fixed;
-    top: 0;
-    left: 0;
+    position: relative;
     width: 100%;
-    z-index: 1;
-    background-color: #fff;
-    border-bottom: 1px solid #ccc;
+    z-index: 2;
   }
   .topnav.responsive .icon {
     position: absolute;
     right: 10px;
-    top: 10px;
+    top: 0;
   }
   .topnav.responsive .main-navbar {
-    float: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color:#c4c4c4;
+    z-index: inherit;
+    border-radius: 25px;
+    margin-right: 1.5rem;
   }
   .topnav.responsive a {
     float: none;
@@ -545,6 +543,8 @@ footer {
     text-align: left;
     padding: 12px;
     margin: 0;
+    font-size: 1rem;
+    border-radius: unset;
   }
   .hero-section {
     display: block;
