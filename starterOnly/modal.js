@@ -63,18 +63,18 @@ function validate() {
 
 //Création de la class réservation
 // chaque réservation sera une instance de cette classe (objet)
-//que l'on retrouvera dans le local storage dans le tableau bookings
-class Booking {
-  constructor(firstname, lastname, email, birthdate, quantity, location, checkbox) {
-    this.firstName = firstname;
-    this.lastName = lastname;
-    this.email = email;
-    this.birthdate = birthdate;
-    this.quantity = quantity;
-    this.location = location;
-    this.checkbox = checkbox;
-  }
-}
+// //que l'on retrouvera dans le local storage dans le tableau bookings
+// class Booking {
+//   constructor(firstname, lastname, email, birthdate, quantity, location, checkbox) {
+//     this.firstName = firstname;
+//     this.lastName = lastname;
+//     this.email = email;
+//     this.birthdate = birthdate;
+//     this.quantity = quantity;
+//     this.location = location;
+//     this.checkbox = checkbox;
+//   }
+// }
 
 //initialisation du tableau des réservations de GameOn
 //persistance des données
@@ -172,7 +172,16 @@ form.addEventListener("submit", (event) => {
     const location = radioLocation.value;
 
     //avec ses infos on crée une instance de Booking qui sera pushé dans le tableau bookings
-    let booking = new Booking(firstName, lastName, email, birthdate, quantity, location, checkbox1);
+    // let booking = new Booking(firstName, lastName, email, birthdate, quantity, location, checkbox1);
+    const booking = {
+      firstName,
+      lastName,
+      email,
+      birthdate,
+      quantity,
+      location,
+      checkbox: checkbox1
+    }
 
     //on pousse la résa dans le tableau bookings du local storage initialisé plus haut
     bookings.push(booking);
