@@ -56,7 +56,7 @@ function validate() {
   //message + bouton fermer
   modalBody.innerHTML = `
     <div class="valid-register">
-    <h2>Merci ! Votre inscription a bien été reçue.</h2>
+    <h2>Merci ! <br>Votre inscription a bien été reçue.</h2>
     <button class="btn-close">Fermer</button>
     </div>
   `;
