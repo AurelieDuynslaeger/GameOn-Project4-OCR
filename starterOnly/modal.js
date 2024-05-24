@@ -7,6 +7,9 @@ const modalClose = document.querySelector(".close");
 //on cible le form pour le submit
 const form = document.querySelector("form");
 
+// on capture le contenu initial de la modal
+const initialModalContent = document.querySelector(".modal-body").innerHTML;
+
 
 function editNav() {
   var x = document.getElementById("myTopnav");
@@ -30,6 +33,10 @@ function launchModal() {
 modalClose.addEventListener("click", () => {
   //si le click est détecté alors la modal passe en display none
   modalbg.style.display = "none";
+  // réinitialiser le contenu de la modal au formulaire initial
+  document.querySelector(".modal-body").innerHTML = initialModalContent;
+  // réattacher les écouteurs d'événement pour le formulaire et les boutons
+  form.addEventListener("submit", handleSubmit);
 });
 
 
@@ -84,8 +91,11 @@ console.table(bookings);
 //JSON des réservations dans la console
 console.log(JSON.stringify(bookings, null, 2));
 
+// on écoute l'event submit sur le formulaire et on fait les vérifs
+form.addEventListener("submit", handleSubmit);
+
 //on écoute l'event submit sur le formulaire et on fait les vérifs
-form.addEventListener("submit", (event) => {
+function handleSubmit(event) {
   //on annule le comportement par défaut du navigateur qui est de rechargé la page
   event.preventDefault();
 
@@ -218,5 +228,5 @@ form.addEventListener("submit", (event) => {
       }
     });
   }
-});
+};
 
