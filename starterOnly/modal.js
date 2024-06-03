@@ -41,12 +41,12 @@ modalClose.addEventListener("click", () => {
 
 
 //on submit sur le form = quand le formulaire est soumis et que les vérifs passées sont bonnes, la pop up de validation apparaît.
-function validate() {
-  //message de validation de la réservation 
-  const firstname = document.getElementById("first").value.trim();
-  alert(`Merci ${firstname} ! Votre réservation a été reçue.`);
-  return true;
-}
+// function validate() {
+//   //message de validation de la réservation 
+//   const firstname = document.getElementById("first").value.trim();
+//   alert(`Merci ${firstname} ! Votre réservation a été reçue.`);
+//   return true;
+// }
 
 // fonction pour changer le contenu de la modal par le message de validation
 function validate() {
@@ -56,7 +56,7 @@ function validate() {
   //message + bouton fermer
   modalBody.innerHTML = `
     <div class="valid-register">
-    <h2>Merci ! <br>Votre inscription a bien été reçue.</h2>
+    <h2>Merci!<br>Votre inscription a bien été reçue.</h2>
     <button class="btn-close">Fermer</button>
     </div>
   `;
@@ -67,21 +67,6 @@ function validate() {
     modalbg.style.display = "none";
   });
 }
-
-//Création de la class réservation
-// chaque réservation sera une instance de cette classe (objet)
-// //que l'on retrouvera dans le local storage dans le tableau bookings
-// class Booking {
-//   constructor(firstname, lastname, email, birthdate, quantity, location, checkbox) {
-//     this.firstName = firstname;
-//     this.lastName = lastname;
-//     this.email = email;
-//     this.birthdate = birthdate;
-//     this.quantity = quantity;
-//     this.location = location;
-//     this.checkbox = checkbox;
-//   }
-// }
 
 //initialisation du tableau des réservations de GameOn
 //persistance des données
@@ -181,8 +166,7 @@ function handleSubmit(event) {
     //on attribue la valeur du radio à location
     const location = radioLocation.value;
 
-    //avec ses infos on crée une instance de Booking qui sera pushé dans le tableau bookings
-    // let booking = new Booking(firstName, lastName, email, birthdate, quantity, location, checkbox1);
+    //avec ses infos on crée un objet booking qui sera pushé dans le tableau bookings
     const booking = {
       firstName,
       lastName,
