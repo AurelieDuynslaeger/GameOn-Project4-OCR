@@ -157,45 +157,6 @@ main {
   margin: 15px auto;
 }
 
-/*ajustements pour la modal sur les mobiles*/
-@media screen and (max-width: 540px){
-  body {
-    height: 100vh;
-  }
-  .bground{
-    top:90px;
-    height: 90vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow-y: auto;
-  }
-  .content{
-    margin:0;
-    max-width: 100%;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-  }
-  .modal-body{
-    flex:1;
-    padding: 15px 8%;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  form {
-    height:90vh;
-  }
-  .formData{
-    margin-bottom: 10px;
-  }
-}
-
-
 /*conteneur message validation*/
 .valid-register{
   height: 70vh;
@@ -510,6 +471,40 @@ footer {
 }
 
 @media screen and (max-width: 800px) {
+
+  body {
+    height: 100vh;
+  }
+  .bground{
+    top:90px;
+    height: 90vh;
+    align-items: center;
+    justify-content: center;
+    overflow-y: auto;
+  }
+  .content{
+    margin:0;
+    max-width: 100%;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .modal-body{
+    flex:1;
+    padding: 15px 8%;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  form {
+    height:90vh;
+  }
+  .formData{
+    margin-bottom: 10px;
+  }
   .topnav a {
     display: none;
   }
