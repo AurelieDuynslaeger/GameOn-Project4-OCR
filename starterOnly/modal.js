@@ -2,14 +2,13 @@
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
-//span X to close modal
+// span X to close modal
 const modalClose = document.querySelector(".close");
-//on cible le form pour le submit
-const form = document.querySelector("form");
+// on cible le form pour le submit
+let form = document.querySelector("form");
 
 // on capture le contenu initial de la modal
 const initialModalContent = document.querySelector(".modal-body").innerHTML;
-
 
 function editNav() {
   var x = document.getElementById("myTopnav");
@@ -28,62 +27,61 @@ function launchModal() {
   modalbg.style.display = "block";
 }
 
-//close modal
-// écouteur d'evènement sur le bouton X de la modal
-modalClose.addEventListener("click", () => {
-  //si le click est détecté alors la modal passe en display none
+// close modal
+// écouteur d'évènement sur le bouton X de la modal
+modalClose.addEventListener("click", closeModal);
+
+function closeModal() {
+  // si le click est détecté alors la modal passe en display none
   modalbg.style.display = "none";
   // réinitialiser le contenu de la modal au formulaire initial
   document.querySelector(".modal-body").innerHTML = initialModalContent;
-  // réattacher les écouteurs d'événement pour le formulaire et les boutons
+  // récupérer à nouveau le form élément car le contenu de la modal a été réinitialisé
+  form = document.querySelector("form");
+  // réattacher les écouteurs d'événement pour le formulaire
   form.addEventListener("submit", handleSubmit);
-});
-
-
+}
 
 // fonction pour changer le contenu de la modal par le message de validation
 function validate() {
-  //on cible le body de la modale
+  // on cible le body de la modale
   const modalBody = document.querySelector(".modal-body");
-  //on lui donne ce qu'on souhaite afficher dedans à la reservation
-  //message + bouton fermer
+  // on lui donne ce qu'on souhaite afficher dedans à la réservation
+  // message + bouton fermer
   modalBody.innerHTML = `
     <div class="valid-register">
-    <h2>Votre inscription a bien été reçue.</h2>
-    <button class="btn-close">Fermer</button>
+      <h2>Votre inscription a bien été reçue.</h2>
+      <button class="btn-close">Fermer</button>
     </div>
   `;
-  //on écoute le click sur le bouton 'fermer', au click on met la modale en display none
+  // on écoute le click sur le bouton 'fermer', au click on met la modale en display none
   const btnClose = document.querySelector(".btn-close");
-  btnClose.addEventListener("click", () => {
-    modalbg.style.display = "none";
-  });
+  btnClose.addEventListener("click", closeModal);
 }
 
-//initialisation du tableau des réservations de GameOn
-//persistance des données
+// initialisation du tableau des réservations de GameOn
+// persistance des données
 const bookings = JSON.parse(localStorage.getItem('bookings')) || [];
-//tableau des reservations dans la console 
+// tableau des réservations dans la console 
 console.table(bookings);
-//JSON des réservations dans la console
+// JSON des réservations dans la console
 console.log(JSON.stringify(bookings, null, 2));
 
 // on écoute l'event submit sur le formulaire et on fait les vérifs
 form.addEventListener("submit", handleSubmit);
 
-//on écoute l'event submit sur le formulaire et on fait les vérifs
 function handleSubmit(event) {
-  //on annule le comportement par défaut du navigateur qui est de rechargé la page
+  // on annule le comportement par défaut du navigateur qui est de recharger la page
   event.preventDefault();
 
-  //enregristrer la résa au click avec toutes les valeurs saisies ou choisies
+  // enregistrer la résa au click avec toutes les valeurs saisies ou choisies
   const firstName = document.getElementById("first").value.trim();
   console.log(`Prénom :${firstName}`);
   const lastName = document.getElementById("last").value.trim();
   console.log(`Nom :${lastName}`);
   const email = document.getElementById("email").value.trim();
   console.log(`Email :${email}`);
-  //trim() : supprime les espaces aux deux extrémités de cette chaîne et renvoie une nouvelle chaîne, sans modifier la chaîne d'origine.
+  // trim() : supprime les espaces aux deux extrémités de cette chaîne et renvoie une nouvelle chaîne, sans modifier la chaîne d'origine.
   const birthdate = document.getElementById("birthdate").value.trim();
   console.log(`Date de naissance :${birthdate}`);
   const quantity = document.getElementById("quantity").value;
@@ -93,67 +91,48 @@ function handleSubmit(event) {
   const checkbox1 = document.getElementById("checkbox1").checked;
   console.log(`CGV :${checkbox1}`);
 
-  //Réinitialisation des attributs data-error et data-error-visible pour tous les champs
-  //dans le css, le style pour les errreurs était présent
-  //j'ai repris les attributs et à chaque déclenchement du formulaire, le data-error de chaque input est mis à vide, et le data-error-visible est mis à faux
+  // Réinitialisation des attributs data-error et data-error-visible pour tous les champs
   formData.forEach(data => {
     data.setAttribute("data-error", "");
     data.setAttribute("data-error-visible", "false");
   });
 
-  //initialisation du tableau d'erreurs
-  //stockage des erreurs pour les afficher sous les inputs concernés s'il y en a
+  // initialisation du tableau d'erreurs
   const errors = [];
 
-  //verifications des saisies utilisateur
+  // vérifications des saisies utilisateur
   if (firstName.length < 2) {
-    //on vérifie si le prénom est au moins long de 2 caractères
-    //si non, on pousse dans le tableau d'erreurs pour pouvoir l'afficher ensuite
-    errors.push({ fieldName: "first", message: "Veuillez entrer 2 caractères ou plus pour le prénom." })
+    errors.push({ fieldName: "first", message: "Veuillez entrer 2 caractères ou plus pour le prénom." });
   }
 
   if (lastName.length < 2) {
-    //on vérifie si le nom est au moins long de 2 caractères
-    errors.push({ fieldName: "last", message: "Veuillez entrer 2 caractères ou plus pour le nom." })
+    errors.push({ fieldName: "last", message: "Veuillez entrer 2 caractères ou plus pour le nom." });
   }
-  //regex 
+
   const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  //utilisation de la méthode test pour valider la chaine de caractères
   if (!emailPattern.test(email)) {
-    //on vérifie si le mail est conforme à l'expression régulière que l'on a défini au desssus
-    errors.push({ fieldName: "email", message: "Veuillez saisir une adresse e-mail valide." })
+    errors.push({ fieldName: "email", message: "Veuillez saisir une adresse e-mail valide." });
   }
 
-  // Vérification si la date de naissance est vide
   if (birthdate === "") {
-    //on vérifie si le champ date n'est pas vide
-    errors.push({ fieldName: "birthdate", message: "Veuillez saisir votre date de naissance." })
+    errors.push({ fieldName: "birthdate", message: "Veuillez saisir votre date de naissance." });
   }
 
-  //isNan = verif si ce qui a été saisie dans quantité est bien un nombre
   if (isNaN(quantity) || quantity < 0 || quantity > 99) {
-    //on vérifie si la saisie est un nombre, et qu'il est supérieur à 0 et inférieur à 99
-    errors.push({ fieldName: "quantity", message: "Veuillez saisir un nombre valide pour le nombre de concours." })
-  }
-  //verif si l'un des radio a été choisi
-  if (!radioLocation) {
-    //on vérifie si un des radio pour la ville a été coché
-    errors.push({ fieldName: "location", message: "Veuillez sélectionner un lieu de tournoi." })
+    errors.push({ fieldName: "quantity", message: "Veuillez saisir un nombre valide pour le nombre de concours." });
   }
 
-  //verif si la checkbox des CGV a bien été cochée
+  if (!radioLocation) {
+    errors.push({ fieldName: "location", message: "Veuillez sélectionner un lieu de tournoi." });
+  }
+
   if (!checkbox1) {
-    //on vérifie si la checkbox des conditions générales a été cochée
-    errors.push({ fieldName: "checkbox1", message: "Veuillez accepter les conditions générales." })
+    errors.push({ fieldName: "checkbox1", message: "Veuillez accepter les conditions générales." });
   }
 
   if (errors.length === 0) {
-    //on vérifie ici si le nombre d'erreurs est strictement égale à 0 alors on fait le traitement
-
-    //on attribue la valeur du radio à location
     const location = radioLocation.value;
 
-    //avec ses infos on crée un objet booking qui sera pushé dans le tableau bookings
     const booking = {
       firstName,
       lastName,
@@ -162,23 +141,17 @@ function handleSubmit(event) {
       quantity,
       location,
       checkbox: checkbox1
-    }
+    };
 
-    //on pousse la résa dans le tableau bookings du local storage initialisé plus haut
     bookings.push(booking);
     localStorage.setItem('bookings', JSON.stringify(bookings));
 
     console.log(booking);
-    //on déclenche la fonction validate() pour le pop up de confirmation
     validate();
-    //méthode reset permet de vider les champs du formulaire
     form.reset();
   } else {
-    // Affichage des erreurs
     errors.forEach(error => {
       if (error.fieldName === "location") {
-        //si le fieldName est strictement égale à "location", on vient attribuer le message d'erreur au conteneur des radios
-        //on cible les inputs radio dont le name est location  
         const radioInputs = document.querySelectorAll('input[name="location"]');
         if (radioInputs) {
           radioInputs.forEach(radio => {
@@ -190,7 +163,6 @@ function handleSubmit(event) {
           });
         }
       } else {
-        // sinon pour les autres champs (inputs text, number etc...), on vient remplir le champ data-error avec le message d'erreur spécifié et on passe le data-error-visible en true pour que l'erreur prenne le style qui lui est attribué dans le css
         const fieldElement = document.getElementById(error.fieldName);
         if (fieldElement) {
           fieldElement.parentNode.setAttribute("data-error", error.message);
@@ -199,5 +171,5 @@ function handleSubmit(event) {
       }
     });
   }
-};
+}
 
