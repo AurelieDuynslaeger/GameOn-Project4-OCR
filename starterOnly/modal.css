@@ -185,22 +185,20 @@ main {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
   }
   form {
-    height:100%;
-  }
-  label{
-    font-size: 15px;
+    height:90vh;
   }
   .formData{
-    margin-bottom: 5px;
+    margin-bottom: 10px;
   }
 }
 
 
 /*conteneur message validation*/
 .valid-register{
-  height: 60vh;
+  height: 70vh;
   padding-top: 60px;
   display: flex;
   flex-direction: column;
@@ -210,6 +208,7 @@ main {
 .valid-register h2{ 
   font-size: 40px;
   margin-bottom: 20px;
+  text-align: center;
 }
 
 .valid-register .btn-close{ 
@@ -222,7 +221,7 @@ label {
   font-size: 17px;
   font-weight: normal;
   display: inline-block;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 input {
   padding: 8px;
@@ -235,7 +234,7 @@ input {
   width: 100%;
   border-radius: 8px;
   font-size: 20px;
-  height: 40px;
+  height: 48px;
 }
 .formData[data-error]::after {
   content: attr(data-error);
@@ -265,7 +264,7 @@ input[data-error]::after {
 .checkbox2-label {
   position: relative;
   margin-left: 36px;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: normal;
 }
 .checkbox-label .checkbox-icon,
