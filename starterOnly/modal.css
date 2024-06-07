@@ -200,7 +200,7 @@ main {
 
 /*conteneur message validation*/
 .valid-register{
-  height: 100%;
+  height: 60vh;
   padding-top: 60px;
   display: flex;
   flex-direction: column;
