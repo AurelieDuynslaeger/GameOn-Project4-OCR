@@ -40,13 +40,6 @@ modalClose.addEventListener("click", () => {
 });
 
 
-//on submit sur le form = quand le formulaire est soumis et que les vérifs passées sont bonnes, la pop up de validation apparaît.
-// function validate() {
-//   //message de validation de la réservation 
-//   const firstname = document.getElementById("first").value.trim();
-//   alert(`Merci ${firstname} ! Votre réservation a été reçue.`);
-//   return true;
-// }
 
 // fonction pour changer le contenu de la modal par le message de validation
 function validate() {
@@ -60,7 +53,6 @@ function validate() {
     <button class="btn-close">Fermer</button>
     </div>
   `;
-
   //on écoute le click sur le bouton 'fermer', au click on met la modale en display none
   const btnClose = document.querySelector(".btn-close");
   btnClose.addEventListener("click", () => {
@@ -125,11 +117,6 @@ function handleSubmit(event) {
     errors.push({ fieldName: "last", message: "Veuillez entrer 2 caractères ou plus pour le nom." })
   }
   //regex 
-  // [a-z0-9._-] (peut contenir lettres a à z, chiffre 0 à 9, un tiret ou point ou underscore)
-  // [a-z0-9._-]+@ (verifier l'arobase)
-  //vérifier ce qui suit l'arobase (fournisseur) [a-z0-9._-]+@[a-z0-9._-]+
-  //vérifier le point [a-z0-9._-]+@[a-z0-9._-]+\.
-  //vérifier l'extension [a-z0-9._-]+@[a-z0-9._-]+\.[a-z0-9._-]+
   const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   //utilisation de la méthode test pour valider la chaine de caractères
   if (!emailPattern.test(email)) {
