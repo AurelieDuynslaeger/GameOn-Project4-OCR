@@ -4,14 +4,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const modalbg = document.querySelector(".bground");
   const modalBtn = document.querySelectorAll(".modal-btn");
   const formData = document.querySelectorAll(".formData");
-
-
   // span X to close modal
   const modalClose = document.querySelector(".close");
   // on cible le form pour le submit
   let form = document.querySelector("form");
-
-  const icon = document.querySelector('.icon'); // Sélectionnez l'élément .icon
+  //nav mobile
+  const icon = document.querySelector('.icon');
 
   // on capture le contenu initial de la modal
   const initialModalContent = document.querySelector(".modal-body").innerHTML;
@@ -24,7 +22,6 @@ document.addEventListener('DOMContentLoaded', () => {
       x.className = "topnav";
     }
   }
-
   // Attachez l'événement click à l'élément .icon
   icon.addEventListener('click', editNav);
 
@@ -38,8 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // close modal
-  // écouteur d'évènement sur le bouton X de la modal
+  // close modal event
   modalClose.addEventListener("click", closeModal);
 
   function closeModal() {
@@ -61,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // message + bouton fermer
     modalBody.innerHTML = `
     <div class="valid-register">
-      <h2>Votre inscription a bien été reçue.</h2>
+      <h2>Votre inscription a bien été reçue !</h2>
       <button class="btn-close">Fermer</button>
     </div>
   `;
@@ -71,7 +67,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // initialisation du tableau des réservations de GameOn
-  // persistance des données
   const bookings = JSON.parse(localStorage.getItem('bookings')) || [];
   // tableau des réservations dans la console 
   console.table(bookings);
@@ -183,6 +178,4 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
   }
-
 });
-
