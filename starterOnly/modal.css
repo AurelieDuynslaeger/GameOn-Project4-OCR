@@ -145,8 +145,8 @@ main {
   animation-name: modalopen;
   animation-duration: var(--modal-duration);
   background: #232323;
-  /* border-radius: 10px;
-  overflow: hidden; */
+  border-radius: 10px;
+  /* overflow: hidden; */
   position: relative;
   color: #fff;
   padding-top: 10px;
