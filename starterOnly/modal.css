@@ -139,14 +139,14 @@ main {
 }
 
 .content {
-  margin: 2% auto;
+  margin:auto;
   width: 100%;
   max-width: 500px;
   animation-name: modalopen;
   animation-duration: var(--modal-duration);
   background: #232323;
   border-radius: 10px;
-  /* overflow: hidden; */
+  overflow: hidden;
   position: relative;
   color: #fff;
   padding-top: 10px;
@@ -154,7 +154,7 @@ main {
 
 .modal-body {
   padding: 15px 8%;
-  /* margin: 15px auto; */
+  margin: auto;
 }
 
 /*conteneur message validation*/
@@ -179,7 +179,7 @@ main {
 
 label {
   font-family: var(--font-default);
-  font-size: 17px;
+  font-size: 15px;
   font-weight: normal;
   display: inline-block;
   margin-bottom: 10px;
@@ -195,7 +195,7 @@ input {
   width: 100%;
   border-radius: 8px;
   font-size: 20px;
-  height: 48px;
+  height: 40px;
 }
 .formData[data-error]::after {
   content: attr(data-error);
@@ -225,7 +225,7 @@ input[data-error]::after {
 .checkbox2-label {
   position: relative;
   margin-left: 36px;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: normal;
 }
 .checkbox-label .checkbox-icon,
@@ -502,8 +502,14 @@ footer {
   form {
     height:90vh;
   }
+  label {
+    margin-bottom: 6px;
+  }
   .formData{
-    margin-bottom: 10px;
+    margin-bottom: 6px;
+  }
+  .text-control {
+    height: 35px;
   }
   .topnav a {
     display: none;
